@@ -1,39 +1,114 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# json_reach_text
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+Render rich text (headings, paragraphs, ordered/unordered lists) from a small **universal JSON schema** in Flutter.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+This package is built around a simple block-based format that is easy to send from a backend / CMS dashboard to your Flutter app, then render with full control over typography, spacing, bullet styling, font family, and colors (with a single `universalColor` default + per-type overrides).
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+---
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- ✅ Render **Heading** blocks (levels 1, 2, 3)
+- ✅ Render **Paragraph** blocks
+- ✅ Render **List** blocks (ordered & unordered)
+- ✅ Inline styles per span: **bold**, **italic**, **underline**
+- ✅ One `universalColor` that becomes the default color everywhere
+- ✅ Optional overrides for each type:
+  - heading colors (h1/h2/h3)
+  - paragraph color
+  - list item & prefix colors (ordered/unordered)
+  - inline style colors (bold/italic/underline)
+- ✅ Optional `fontFamily` applied to all text
 
-## Getting started
+---
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+## Core Parameters
+| Name             | Type                    | Description                                                                          |
+| ---------------- | ----------------------- | ------------------------------------------------------------------------------------ |
+| `description`    | `List<UniversalBlock>?` | **Required.** Parsed blocks coming from JSON. If null or empty, nothing is rendered. |
+| `fontFamily`     | `String?`               | Font family applied to **all text** (headings, paragraphs, lists, inline spans).     |
+| `universalColor` | `Color?`                | Default fallback color used everywhere unless overridden by a more specific color.   |
 
-## Usage
+## Text Styles
+| Name             | Type        | Affects                               |
+| ---------------- | ----------- | ------------------------------------- |
+| `paragraphStyle` | `TextStyle` | Base text style for paragraph blocks. |
+| `h1Style`        | `TextStyle` | Base text style for heading level 1.  |
+| `h2Style`        | `TextStyle` | Base text style for heading level 2.  |
+| `h3Style`        | `TextStyle` | Base text style for heading level 3.  |
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+## Block-Level Colors
+| Name             | Type     | Affects                |
+| ---------------- | -------- | ---------------------- |
+| `paragraphColor` | `Color?` | Paragraph text color.  |
+| `h1Color`        | `Color?` | Heading level 1 color. |
+| `h2Color`        | `Color?` | Heading level 2 color. |
+| `h3Color`        | `Color?` | Heading level 3 color. |
 
-```dart
-const like = 'sample';
+## List Item Colors
+| Name                     | Type     | Affects                                             |
+| ------------------------ | -------- | --------------------------------------------------- |
+| `listItemColor`          | `Color?` | Default list item text color (ordered & unordered). |
+| `orderedListItemColor`   | `Color?` | List item text color for **ordered lists** only.    |
+| `unorderedListItemColor` | `Color?` | List item text color for **unordered lists** only.  |
+
+## List Prefix Colors (Numbers / Bullets)
+| Name                       | Type     | Affects                                               |
+| -------------------------- | -------- | ----------------------------------------------------- |
+| `listPrefixColor`          | `Color?` | Default color for list prefixes (numbers or bullets). |
+| `orderedListPrefixColor`   | `Color?` | Prefix color for **ordered lists** only.              |
+| `unorderedListPrefixColor` | `Color?` | Prefix color for **unordered lists** only.            |
+
+## Inline Style Colors
+| Name             | Type     | Affects                                               |
+| ---------------- | -------- | ----------------------------------------------------- |
+| `boldColor`      | `Color?` | Color applied to inline text marked as **bold**.      |
+| `italicColor`    | `Color?` | Color applied to inline text marked as **italic**.    |
+| `underlineColor` | `Color?` | Color applied to inline text marked as **underline**. |
+
+##  Layout & Spacing
+| Name              | Type                 | Description                                                   |
+| ----------------- | -------------------- | ------------------------------------------------------------- |
+| `padding`         | `EdgeInsetsGeometry` | Padding around the entire rendered content.                   |
+| `blockSpacing`    | `double`             | Vertical spacing between blocks (heading / paragraph / list). |
+| `listItemSpacing` | `double`             | Vertical spacing between list items.                          |
+| `listGap`         | `double`             | Horizontal space between list prefix and item text.           |
+
+##  List Behavior 
+| Name          | Type     | Description                                                     |
+| ------------- | -------- | --------------------------------------------------------------- |
+| `bulletPoint` | `String` | Character used for unordered list bullets (e.g. `•`, `▪`, `-`). |
+
+## Example Override Setup
+
+```
+UniversalTextView(
+  description: data.description,
+  fontFamily: 'Almarai',
+  universalColor: Colors.grey.shade800,
+  h1Color: Colors.black,
+  paragraphColor: Colors.black87,
+  boldColor: Colors.red,
+  underlineColor: Colors.blue,
+  listPrefixColor: Colors.deepPurple,
+  bulletPoint: '▪',
+  padding: const EdgeInsets.all(16),
+  blockSpacing: 14,
+  listGap: 8,
+);
+
+```
+## Installation
+
+
+Add the package to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  json_reach_text:
+    git:
+      url: https://github.com/tokaelkeik/reusable_views
+      ref: main
 ```
 
 ## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
