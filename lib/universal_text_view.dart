@@ -46,7 +46,8 @@ class UniversalTextView extends StatelessWidget {
   // -------------------------
   // Bullet
   // -------------------------
-  final String bulletPoint;
+  final Widget? unorderedListBullet;
+
 
   const UniversalTextView({
     super.key,
@@ -96,7 +97,7 @@ class UniversalTextView extends StatelessWidget {
     this.blockSpacing = 12,
     this.listItemSpacing = 6,
     this.listGap = 30,
-    this.bulletPoint = '•',
+    this.unorderedListBullet,
   });
 
   @override
@@ -142,7 +143,7 @@ class UniversalTextView extends StatelessWidget {
             blockSpacing: blockSpacing,
             listItemSpacing: listItemSpacing,
             listGap: listGap,
-            bulletPoint: bulletPoint,
+                unorderedListBullet: unorderedListBullet,
           ),
         )
             .toList(),
@@ -188,7 +189,7 @@ class UniversalBlockView extends StatelessWidget {
   final double blockSpacing;
   final double listItemSpacing;
   final double listGap;
-  final String bulletPoint;
+  final Widget? unorderedListBullet;
 
   const UniversalBlockView({
     super.key,
@@ -216,7 +217,7 @@ class UniversalBlockView extends StatelessWidget {
     required this.blockSpacing,
     required this.listItemSpacing,
     required this.listGap,
-    required this.bulletPoint,
+    required this.unorderedListBullet,
   });
 
   @override
@@ -273,7 +274,7 @@ class UniversalBlockView extends StatelessWidget {
           // Layout
           listItemSpacing: listItemSpacing,
           listGap: listGap,
-          bulletPoint: bulletPoint,
+          unorderedListBullet: unorderedListBullet,
         ),
       ),
     );
@@ -436,7 +437,7 @@ class UniversalListBlock extends StatelessWidget {
 
   final double listItemSpacing;
   final double listGap;
-  final String bulletPoint;
+  final Widget? unorderedListBullet;
 
   const UniversalListBlock({
     super.key,
@@ -459,7 +460,7 @@ class UniversalListBlock extends StatelessWidget {
     required this.underlineColor,
     required this.listItemSpacing,
     required this.listGap,
-    required this.bulletPoint,
+    required this.unorderedListBullet,
   });
 
   @override
@@ -488,15 +489,21 @@ class UniversalListBlock extends StatelessWidget {
         final index = entry.key;
         final item = entry.value;
 
-        final prefix =
-        style == UniversalListStyle.ordered ? '${index + 1}.' : bulletPoint;
+        final bool isOrdered = style == UniversalListStyle.ordered;
+
+        final Widget prefixWidget = isOrdered
+            ? Text('${index + 1}.', style: prefixStyle)
+            : DefaultTextStyle(
+          style: prefixStyle,
+          child: unorderedListBullet ?? const Text('•'),
+        );
 
         return Padding(
           padding: EdgeInsets.only(bottom: listItemSpacing),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(prefix, style: prefixStyle),
+              prefixWidget,
               SizedBox(width: listGap),
               Expanded(
                 child: UniversalRichText(
