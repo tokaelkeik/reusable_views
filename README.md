@@ -19,6 +19,7 @@ This package is built around a simple block-based format that is easy to send fr
   - list item & prefix colors (ordered/unordered)
   - inline style colors (bold/italic/underline)
 - ✅ Optional `fontFamily` applied to all text
+- Unordered list widget so you can customize it as you want
 
 ---
 
@@ -77,7 +78,7 @@ This package is built around a simple block-based format that is easy to send fr
 ##  List Behavior 
 | Name          | Type     | Description                                                     |
 | ------------- | -------- | --------------------------------------------------------------- |
-| `bulletPoint` | `String` | Character used for unordered list bullets (e.g. `•`, `▪`, `-`). |
+| `unorderedListBullet` | `widget` | Pass a widget |
 
 ## Example Override Setup
 
@@ -91,10 +92,10 @@ UniversalTextView(
   boldColor: Colors.red,
   underlineColor: Colors.blue,
   listPrefixColor: Colors.deepPurple,
-  bulletPoint: '▪',
   padding: const EdgeInsets.all(16),
   blockSpacing: 14,
   listGap: 8,
+  unorderedListBullet: const Icon(Icons.two_k_plus_outlined, size: 10),
 );
 
 ```
