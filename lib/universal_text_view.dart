@@ -501,7 +501,8 @@ class UniversalListBlock extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.only(bottom: listItemSpacing),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               prefixWidget,
               SizedBox(width: listGap),
@@ -576,7 +577,6 @@ class UniversalRichText extends StatelessWidget {
       text: TextSpan(
         style: effectiveBase,
         children: children.map((t) {
-          // ✅ CHANGED: if span has no special color, fallback to base, then universalColor
           final spanColor =
               _resolveInlineColor(t) ?? effectiveBase.color ?? universalColor;
 
