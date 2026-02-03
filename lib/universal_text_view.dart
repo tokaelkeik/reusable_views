@@ -501,8 +501,8 @@ class UniversalListBlock extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.only(bottom: listItemSpacing),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
             children: [
               prefixWidget,
               SizedBox(width: listGap),
